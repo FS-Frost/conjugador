@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+
+<head>
+	<meta charset="utf-8" />
+	<base href="/conjugador/" />
+	<link rel="icon" href="./favicon.png" />
+	<link rel="manifest" href="./manifest.json" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+		integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	
+		<link href="./_app/immutable/assets/0.Dhdu-g02.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/2.Li5zYl4x.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.Dkj-OOQO.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/entry.BLg9DVG9.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.Ce_0Mfso.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.M7WuUczP.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.BblfR6Cv.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.Dl4xrfiv.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.BsKD5LVq.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/activePage.DWTkYAb6.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/2.CTKvHiTy.js">
+</head>
+
+<body data-sveltekit-preload-data="hover">
+	<div style="display: contents">  <div class="app svelte-15hr64"><nav class="navbar"><a role="button" tabindex="0" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false" href="javascript:;" data-svelte-h="svelte-dlbsti"><span aria-hidden="true"></span> <span aria-hidden="true"></span> <span aria-hidden="true"></span> <span aria-hidden="true"></span></a> <div class="navbar-menu" id="navMenu"><div class="navbar-start"><a class="navbar-item " href="?pagina=inicio">Inicio</a></div> <div class="navbar-end" data-svelte-h="svelte-14mkgiu"><a class="navbar-item" title="Ver en GitHub" href="https://github.com/FS-Frost/conjugador" target="_blank">Ver en GitHub</a></div></div></nav> <main class="svelte-15hr64"><section class="svelte-1v8t9ry"> </section></main> </div> 
+			
+			<script>
+				{
+					__sveltekit_f3clm9 = {
+						base: new URL(".", location).pathname.slice(0, -1)
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("./_app/immutable/entry/start.Dkj-OOQO.js"),
+						import("./_app/immutable/entry/app.BblfR6Cv.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 2],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+
+	<script>
+		if ("serviceWorker" in navigator) {
+			window.addEventListener("load", function () {
+				navigator.serviceWorker
+					.register("worker.js")
+					.then(
+						function (registration) {
+							console.log("Worker registration successful", registration.scope);
+						},
+						function (err) {
+							console.log("Worker registration failed", err);
+						}
+					)
+					.catch(function (err) {
+						console.log(err);
+					});
+			});
+		} else {
+			console.log("Service Worker is not supported by browser.");
+		}
+	</script>
+</body>
+
+</html>
