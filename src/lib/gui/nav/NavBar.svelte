@@ -1,9 +1,6 @@
 <script lang="ts">
-    import { onMount } from "svelte";
     import NavItem from "./NavItem.svelte";
-    import { BuildInfo, getBuildInfo } from "$lib/buildInfo";
 
-    let buildInfo: BuildInfo = BuildInfo.parse({});
     let navMenu: HTMLElement;
     let navToggle: HTMLElement;
 
@@ -16,10 +13,6 @@
             navMenu.classList.toggle("is-active");
         }
     }
-
-    onMount(async () => {
-        buildInfo = await getBuildInfo();
-    });
 </script>
 
 <nav class="navbar">

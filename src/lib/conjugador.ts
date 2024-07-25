@@ -68,11 +68,17 @@ function conjugarParticipio(info: InfoPalabra): string {
     }
 }
 
-function conjugarIndicativoPrimeraPersonaSingular(base: string): string {
+function conjugarIndicativoPrimeraPersonaSingularPresente(info: InfoPalabra): string {
+    if (info.base.endsWith("c")) {
+        // base: [surc]ir
+        // surcir => sur + ce
+        return info.base.substring(0, info.base.length - 1) + "ce";
+    }
+
     // amar => salt + o
     // temer => tem + o
     // partir => part + o
-    return base + "o";
+    return info.base + "o";
 }
 
 function conjugarIndicativoPrimeraPersonaSingularPreteritoImperfecto(info: InfoPalabra): string {
@@ -93,16 +99,21 @@ function conjugarIndicativoPrimeraPersonaSingularPreteritoImperfecto(info: InfoP
 }
 
 function conjugarIndicativoPrimeraPersonaSingularPreteritoPerfectoSimple(info: InfoPalabra): string {
+    let base = info.base;
+    if (info.base.endsWith("z")) {
+        base = info.base.substring(0, base.length - 1) + "c";
+    }
+
     switch (info.determinante) {
         case "a":
             // amar => am + é
-            return info.base + "é";
+            return base + "é";
 
         case "e":
         case "i":
             // temer => tem + í
             // partir => part + í
-            return info.base + "í";
+            return base + "í";
 
         default:
             return "";
@@ -124,6 +135,10 @@ function conjugarIndicativoPrimeraPersonaSingularCondicionalSimple(palabra: stri
 }
 
 function conjugarSubjuntivoPrimeraPersonaSingularPresente(base: string): string {
+    if (base.endsWith("z")) {
+        base = base.substring(0, base.length - 1) + "c";
+    }
+
     // amar => am + e
     // temer => tem + e
     // partir => part + e
@@ -154,53 +169,112 @@ function conjugarSubjuntivoPrimeraPersonaSingularFuturoSimple(palabra: string): 
     return palabra + "e";
 }
 
-function conjugarImperativoPrimeraPersonaSingular(base: string): string {
+function conjugarImperativoPrimeraPersonaSingular(info: InfoPalabra): string {
     // amar => am + a
     // temer => tem + a
     // partir => part + a
-    return base + "a";
+    // return base + "a";
+
+    if (info.base.endsWith("z")) {
+        // base: [roz]ar
+        // rozar => roz + a
+        return info.base + "a";
+    }
+
+    if (info.base.endsWith("c")) {
+        // base: [surc]ir
+        // surcir => sur + za
+        return info.base.substring(0, info.base.length - 1) + "za";
+    }
+
+    switch (info.determinante) {
+        case "a":
+            // amar => am + ara
+            return info.base + "ara";
+
+        case "e":
+        case "i":
+            // temer => tem + iera
+            // partir => part + iera
+            return info.base + "iera";
+
+        default:
+            return "";
+    }
 }
 
-export function conjugar(palabra: string): Record<string, string> {
+export type Conjugacion = {
+    nombre: string;
+    valor: string;
+};
+
+export function conjugar(palabra: string): Conjugacion[] {
     const info = analizarPalabra(palabra);
     console.log(`Base: ${info.base}`);
     console.log(`Raíz: ${info.raiz}`);
     console.log(`Determinante: ${info.determinante}`);
 
-    const conjugaciones: Record<string, string> = {};
+    const conjugaciones: Conjugacion[] = [];
 
-    conjugaciones["Indicativo: Infinitivo"] = palabra;
+    conjugaciones.push({
+        nombre: "Indicativo: Infinitivo",
+        valor: palabra,
+    });
 
-    conjugaciones["Indicativo: Gerundio"] = conjugarGerundio(info);
+    conjugaciones.push({
+        nombre: "Indicativo: Gerundio",
+        valor: conjugarGerundio(info),
+    });
 
-    conjugaciones["Indicativo: Participio"] = conjugarParticipio(info);
+    conjugaciones.push({
+        nombre: "Indicativo: Participio",
+        valor: conjugarParticipio(info),
+    });
 
-    conjugaciones["Indicativo: Primera persona singular: Presente"] =
-        conjugarIndicativoPrimeraPersonaSingular(info.base);
+    conjugaciones.push({
+        nombre: "Indicativo: Primera persona singular: Presente",
+        valor: conjugarIndicativoPrimeraPersonaSingularPresente(info),
+    });
 
-    conjugaciones["Indicativo: Primera persona singular: Pretérito imperfecto"] =
-        conjugarIndicativoPrimeraPersonaSingularPreteritoImperfecto(info);
+    conjugaciones.push({
+        nombre: "Indicativo: Primera persona singular: Pretérito imperfecto",
+        valor: conjugarIndicativoPrimeraPersonaSingularPreteritoImperfecto(info),
+    });
 
-    conjugaciones["Indicativo: Primera persona singular: Pretérito perfecto simple"] =
-        conjugarIndicativoPrimeraPersonaSingularPreteritoPerfectoSimple(info);
+    conjugaciones.push({
+        nombre: "Indicativo: Primera persona singular: Pretérito perfecto simple",
+        valor: conjugarIndicativoPrimeraPersonaSingularPreteritoPerfectoSimple(info),
+    });
 
-    conjugaciones["Indicativo: Primera persona singular: Futuro simple"] =
-        conjugarIndicativoPrimeraPersonaSingularFuturoSimple(palabra);
+    conjugaciones.push({
+        nombre: "Indicativo: Primera persona singular: Futuro simple",
+        valor: conjugarIndicativoPrimeraPersonaSingularFuturoSimple(palabra),
+    });
 
-    conjugaciones["Indicativo: Primera persona singular: Condicional simple"] =
-        conjugarIndicativoPrimeraPersonaSingularCondicionalSimple(palabra);
+    conjugaciones.push({
+        nombre: "Indicativo: Primera persona singular: Condicional simple",
+        valor: conjugarIndicativoPrimeraPersonaSingularCondicionalSimple(palabra),
+    });
 
-    conjugaciones["Subjuntivo: Primera persona singular: Presente"] =
-        conjugarSubjuntivoPrimeraPersonaSingularPresente(info.base);
+    conjugaciones.push({
+        nombre: "Subjuntivo: Primera persona singular: Presente",
+        valor: conjugarSubjuntivoPrimeraPersonaSingularPresente(info.base),
+    });
 
-    conjugaciones["Subjuntivo: Primera persona singular: Pretérito imperfecto"] =
-        conjugarSubjuntivoPrimeraPersonaSingularPreteritoImperfecto(info);
+    conjugaciones.push({
+        nombre: "Subjuntivo: Primera persona singular: Pretérito imperfecto",
+        valor: conjugarSubjuntivoPrimeraPersonaSingularPreteritoImperfecto(info),
+    });
 
-    conjugaciones["Subjuntivo: Primera persona singular: Futuro simple"] =
-        conjugarSubjuntivoPrimeraPersonaSingularFuturoSimple(palabra);
+    conjugaciones.push({
+        nombre: "Subjuntivo: Primera persona singular: Futuro simple",
+        valor: conjugarSubjuntivoPrimeraPersonaSingularFuturoSimple(palabra),
+    });
 
-    conjugaciones["Imperativo: Primera persona singular"] =
-        conjugarImperativoPrimeraPersonaSingular(info.base);
+    conjugaciones.push({
+        nombre: "Imperativo: Primera persona singular",
+        valor: conjugarImperativoPrimeraPersonaSingular(info),
+    });
 
     return conjugaciones;
 }

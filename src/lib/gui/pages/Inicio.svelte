@@ -1,6 +1,7 @@
 <script lang="ts">
     import { analizarPalabra } from "$lib/conjugador";
     import { verbosIrregulares } from "$lib/verbosIrregulares";
+    import Conjugaciones from "./Conjugaciones.svelte";
 
     let palabra: string = "amar";
 
@@ -30,9 +31,7 @@
         <p><b>{palabra}</b> es un verbo irregular no soportado.</p>
     {:else if palabra.length > 0}
         {#if infoPalabra != null && infoPalabra.determinante.length > 0}
-            <p>Base: {infoPalabra.base}</p>
-            <p>Raíz: {infoPalabra.raiz}</p>
-            <p>Determinante: {infoPalabra.determinante}</p>
+            <Conjugaciones {infoPalabra} />
         {:else}
             <p><b>{palabra}</b> no es un verbo.</p>
         {/if}
